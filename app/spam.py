@@ -1,4 +1,4 @@
-def check_spam(text: str):
+def check_spam(text: str) -> str:
     text = text.lower().strip()
     
     if text == "":
