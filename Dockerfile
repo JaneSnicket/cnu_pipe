@@ -1,5 +1,6 @@
 # 로컬이3.13이라. 이전버전이면거기에맞춰서수정3.11가가장안정되었다고들함
 FROM python:3.13-slim
+
 WORKDIR /app
 # 의존성설치
 COPY requirements.txt .
