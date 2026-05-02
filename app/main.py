@@ -39,11 +39,8 @@ async def classify(payload: ClassifyRequest):
     logger.info(f"CALL /classify | text='{text}' | len={len(text)}")
     
     try:
-        # 의도적 에러 삽입 (운영 중 발생할 수 있는 예상치 못한 버그 시뮬레이션)
         if text == "crash":
-            raise RuntimeError("의도적장애추가")
-            
-        # 정상 스팸 체크 로직 수행
+            raise RuntimeError("의도적 장애 추가")
         label, score = check_spam(text)
         
         # (B) 정상 처리 결과도 짧게 기록
