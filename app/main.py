@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from app.spam import check_spam
 from pydantic import BaseModel
 from app.issue import *
+import traceback
 import logging # 로깅 라이브러리 추가
 
 # 1) 로그 포맷: 시간 + 레벨 + 파일명:줄번호(함수명) + 메시지
