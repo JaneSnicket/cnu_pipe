@@ -1,11 +1,12 @@
 from fastapi import FastAPI, Body
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-from app.spam import check_spam
 from pydantic import BaseModel
 from app.issue import *
 import traceback
 import logging # 로깅 라이브러리 추가
+from app.config import MODEL_MODE
+from app.spam import check_spam_rules, check_spam_ml
 
 # 1) 로그 포맷: 시간 + 레벨 + 파일명:줄번호(함수명) + 메시지
 logging.basicConfig(
@@ -39,16 +40,15 @@ async def classify(payload: ClassifyRequest):
     logger.info(f"CALL /classify | text='{text}' | len={len(text)}")
     
     try:
-        if text == "crash":
-            raise RuntimeError("의도적 장애 추가")
-        label, score = check_spam(text)
+        # label, score = check_spam(text)
+        if MODEL_MODE == "ml":
+            label, score = check_spam_ml(text)
+        else:
+            label, score = check_spam_rules(text)
         
-        # (B) 정상 처리 결과도 짧게 기록
-        logger.info(f"OK  /classify | label={label} score={score}")
-        
-        return {
-            "label": label, "score": score
-        }
+        logger.info(f"OK /classfiy | label ={label} score={score}")
+
+        return {"label": label, "score": score}
         
     except Exception as e:
         # (C) 디버깅 핵심: 에러 종류/메시지 + 스택 트레이스 기록
