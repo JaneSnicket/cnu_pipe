@@ -4,8 +4,8 @@ import mlflow
 import mlflow.sklearn
 from mlflow.tracking import MlflowClient
 
+_model_info = None
 
-'''
 def load_model():
     global _model
     if _model is None:
@@ -13,9 +13,9 @@ def load_model():
         _model = mlflow.sklearn.load_model(MODEL_URI)
         # _model = joblib.load(LOCAL_MODEL_PATH)
     return _model
-'''
 
-_model_info = None
+
+
 def get_model_info():
     global _model_info
     
