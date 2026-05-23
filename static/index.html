@@ -30,9 +30,15 @@
                     body: JSON.stringify({text})
                 })
                 .then(res => res.json())
-                .then(data => {
-                    document.getElementById("result").innerText =
-                    "결과: " + data.label + " (score=" + data.score + ")";
+                .then(data =>{ 
+                // 출력데이터추가
+                    letmsg = "결과: "+ data.label+ " (score="+ data.score+ ")";
+                    if(data.model_info) {
+                        msg += "\n모델: "+ data.model_info.model_type;
+                        msg += "\nTestAcc: "+ data.model_info.test_accuracy;
+                        msg += "\nRunID: "+ data.model_info.run_id;
+                    }
+                    document.getElementById("result").innerText= msg;
                 })
                 .catch(() => {
                     document.getElementById("result").innerText = "에러 발생";

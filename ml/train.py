@@ -44,7 +44,9 @@ models = {
 # 실험 기록 시작
 for model_name, model in models.items():
     with mlflow.start_run(run_name=model_name):
-        # 실험 설정 기록 (들여쓰기 수정 완료)
+        # 실험 설정 기록
+        mlflow.log_param("model_type", model_name)
+        mlflow.log_param("vectorizer", "CountVectorizer")
         mlflow.log_param("train_data_path", TRAIN_DATA_PATH)
         mlflow.log_param("test_train_data_path", TEST_DATA_PATH)
         mlflow.log_param("train_row_count", len(train_df))

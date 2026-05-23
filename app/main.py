@@ -7,6 +7,7 @@ import traceback
 import logging # 로깅 라이브러리 추가
 from app.config import MODEL_MODE
 from app.spam import check_spam_rules, check_spam_ml
+from app.model_loader import get_model_info
 
 # 1) 로그 포맷: 시간 + 레벨 + 파일명:줄번호(함수명) + 메시지
 logging.basicConfig(
@@ -48,7 +49,9 @@ async def classify(payload: ClassifyRequest):
         
         logger.info(f"OK /classfiy | label ={label} score={score}")
 
-        return {"label": label, "score": score}
+        return {"label": label, "score": score,
+                "model_info":get_model_info()
+                }
         
     except Exception as e:
         # (C) 디버깅 핵심: 에러 종류/메시지 + 스택 트레이스 기록
