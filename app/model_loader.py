@@ -3,7 +3,7 @@ from app.config import MODEL_URI, MLFLOW_TRACKING_URI
 import mlflow
 import mlflow.sklearn
 from mlflow.tracking import MlflowClient
-
+_model = None
 _model_info = None
 
 def load_model():
